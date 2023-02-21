@@ -1,31 +1,18 @@
-import { itemValue } from '@/types'
-import { Select, MenuItem, SelectChangeEvent, FormControl } from '@mui/material'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
-type SelectFormProps = {}
+type SelectFormProps = {
+  item: string
+}
 
-const SelectForm: FC<SelectFormProps> = () => {
-  const [item, setItem] = useState<itemValue>('ring')
-
-  const handleChange = (event: SelectChangeEvent<itemValue>) => {
-    setItem(event.target.value as itemValue)
-  }
-
+const SelectForm: FC<SelectFormProps> = ({ item }) => {
   return (
-    <FormControl>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={item}
-        onChange={handleChange}
-      >
-        <MenuItem value="ring">Ring</MenuItem>
-        <MenuItem value="diamond">Diamond</MenuItem>
-        <MenuItem value="bird pendant">Bird Pendant</MenuItem>
-        <MenuItem value="snuff tin">Snuff Tin</MenuItem>
-        <MenuItem value="war medal">War Medal</MenuItem>
-      </Select>
-    </FormControl>
+    <>
+      <option value="ring">Ring</option>
+      <option value="diamond">Diamond</option>
+      <option value="bird pendant">Bird Pendant</option>
+      <option value="snuff tin">Snuff Tin</option>
+      <option value="war medal">War Medal</option>
+    </>
   )
 }
 
