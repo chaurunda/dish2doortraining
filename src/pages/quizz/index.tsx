@@ -21,22 +21,19 @@ const index: FC<indexProps> = ({ imageInfos }) => {
       <Head>
         <title>Dishonored 2 Door Training - Quizz</title>
       </Head>
-      <Container sx={{ display: 'flex' }}>
-        <Grid item xs={false} sm={4} md={7}>
+      <Grid container sx={{ display: 'flex', justifyContent: 'center', padding: 0 }}>
+        <Grid item xs={12} sm={4} md={7}>
           <Image
             src={imageInfos.url}
             alt=""
-            width={804}
-            height={834}
-            style={{ margin: '0 auto', maxHeight: '75vh', width: 'auto' }}
+            width={800}
+            height={830}
+            style={{ margin: '0 auto', width: 'auto', height: 'auto' }}
           />
         </Grid>
-        <Grid item xs={12} sm={8} md={5}>
-          Here come the timer
-        </Grid>
-      </Container>
+        <Grid item>Here come the timer</Grid>
+      </Grid>
       <Box
-        mr={4}
         sx={{
           marginTop: 8,
         }}

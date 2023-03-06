@@ -46,26 +46,27 @@ const AnswerForm: FC<AnswerFormProps> = ({ response }) => {
     },
   })
   return (
-    <Grid container spacing={4} justifyContent="center" width="100%">
+    <Grid spacing={4} justifyContent="center" width="100%">
       <form onSubmit={formik.handleSubmit}>
-        {Object.keys(formik.values).map((value, index) => {
-          return (
-            <TextField
-              select
-              key={value + index}
-              label={value}
-              onChange={formik.handleChange}
-              defaultValue=""
-              id={value}
-              SelectProps={{
-                native: true,
-              }}
-            >
-              <SelectForm item={value} />
-            </TextField>
-          )
-        })}
-
+        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          {Object.keys(formik.values).map((value, index) => {
+            return (
+              <TextField
+                select
+                key={value + index}
+                label={value}
+                onChange={formik.handleChange}
+                defaultValue=""
+                id={value}
+                SelectProps={{
+                  native: true,
+                }}
+              >
+                <SelectForm item={value} />
+              </TextField>
+            )
+          })}
+        </div>
         <Button color="primary" variant="contained" fullWidth type="submit">
           Submit
         </Button>

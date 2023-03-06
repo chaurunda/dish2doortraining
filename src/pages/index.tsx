@@ -16,19 +16,20 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            padding: 0,
           }}
         >
-          <Typography variant="h1">Dishonored 2 Door Training</Typography>
-          <Container maxWidth="xs">
-            <Box component="form" onSubmit={() => {}} noValidate sx={{ mt: 1 }}>
-              <Typography className="m-4">
-                Welcome to the Dishonored 2 door Training. This aim to help you to open the gate as
-                fast as possible
-              </Typography>
-              <Button href="/quizz" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
-                Go
-              </Button>
-            </Box>
+          <Container>
+            <Typography variant="h1" sx={{ fontSize: '2rem', textAlign: 'center' }}>
+              Dishonored 2 Door Training
+            </Typography>
+            <Typography mt="1rem">
+              Welcome to the Dishonored 2 door Training. This aim to help you to open the gate as
+              fast as possible
+            </Typography>
+            <Button href="/quizz" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
+              Go
+            </Button>
           </Container>
         </Box>
       </main>

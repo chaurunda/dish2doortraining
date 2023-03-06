@@ -6,7 +6,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" style={{ padding: 0 }}>
           <Main />
           <NextScript />
         </Container>
