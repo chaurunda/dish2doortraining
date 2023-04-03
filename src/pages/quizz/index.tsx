@@ -1,4 +1,5 @@
 import AnswerForm from '@/components/AnswerForm'
+import StopWatch from '@/components/Chrono/StopWatch/StopWatch'
 import { List } from '@/types'
 import { Margin } from '@mui/icons-material'
 import { Container, Grid, Paper } from '@mui/material'
@@ -15,7 +16,7 @@ type indexProps = {
   }
 }
 
-const index: FC<indexProps> = ({ imageInfos }) => {
+const Quizz: FC<indexProps> = ({ imageInfos }) => {
   return (
     <>
       <Head>
@@ -31,7 +32,9 @@ const index: FC<indexProps> = ({ imageInfos }) => {
             style={{ margin: '0 auto', width: 'auto', height: 'auto' }}
           />
         </Grid>
-        <Grid item>Here come the timer</Grid>
+        <Grid item>
+          <StopWatch />
+        </Grid>
       </Grid>
       <Box
         sx={{
@@ -44,7 +47,7 @@ const index: FC<indexProps> = ({ imageInfos }) => {
   )
 }
 
-export default index
+export default Quizz
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const host = context.req.headers.host
   const res = await fetch(`http://${host}/api/image`)
