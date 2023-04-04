@@ -1,41 +1,24 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import Timer from '../Timer/Timer'
 import ControlButton from '../ControlButton/ControlButton'
 
-type StopWatchProps = {}
+type StopWatchProps = {
+  isActive: boolean
+  isPaused: boolean
+  handleStart: () => void
+  handlePauseResume: () => void
+  handleReset: () => void
+  time: number
+}
 
-const StopWatch: FC<StopWatchProps> = () => {
-  const [isActive, setIsActive] = useState(false)
-  const [isPaused, setIsPaused] = useState(true)
-  const [time, setTime] = useState(0)
-
-  useEffect(() => {
-    let interval: NodeJS.Timer
-
-    if (isActive && isPaused === false) {
-      interval = setInterval(() => {
-        setTime((time) => time + 10)
-      }, 10)
-    }
-    return () => {
-      clearInterval(interval)
-    }
-  }, [isActive, isPaused])
-
-  const handleStart = () => {
-    setIsActive(true)
-    setIsPaused(false)
-  }
-
-  const handlePauseResume = () => {
-    setIsPaused(!isPaused)
-  }
-
-  const handleReset = () => {
-    setIsActive(false)
-    setTime(0)
-  }
-
+const StopWatch: FC<StopWatchProps> = ({
+  isActive,
+  isPaused,
+  handleStart,
+  handlePauseResume,
+  handleReset,
+  time,
+}) => {
   return (
     <div>
       <Timer time={time} />
