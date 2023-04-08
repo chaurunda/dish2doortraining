@@ -3,38 +3,33 @@ import { FC } from 'react'
 
 type ControlButtonProps = {
   isActive: boolean
-  isPaused: boolean
   handleStart: () => void
-  handlePauseResume: () => void
   handleReset: () => void
 }
 
-const ControlButton: FC<ControlButtonProps> = ({
-  isActive,
-  isPaused,
-  handleStart,
-  handlePauseResume,
-  handleReset,
-}) => {
+const ControlButton: FC<ControlButtonProps> = ({ isActive, handleStart, handleReset }) => {
   const StartButton = (
     <Button variant="contained" onClick={handleStart}>
       Start
     </Button>
   )
   const ActiveButtons = (
-    <div>
-      <Button variant="contained" onClick={handleReset}>
-        Reset
-      </Button>
-      <Button variant="contained" onClick={handlePauseResume}>
-        {isPaused ? 'Resume' : 'Pause'}
-      </Button>
-    </div>
+    <Button variant="contained" onClick={handleReset}>
+      Reset
+    </Button>
   )
 
   return (
     <div>
-      <div>{isActive ? ActiveButtons : StartButton}</div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {isActive ? ActiveButtons : StartButton}
+      </div>
     </div>
   )
 }

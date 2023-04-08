@@ -1,4 +1,4 @@
-import { getTimeInMilliseconds, getTimeInMinutes, getTimeInSeconds } from '@/utils'
+import { getTimeInMinutes, getTimeInSeconds, getTimeInMilliseconds } from '@/utils/utils'
 import { CSSProperties, FC } from 'react'
 
 type TimerProps = {

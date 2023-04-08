@@ -1,7 +1,6 @@
 import AnswerForm from '@/components/AnswerForm'
 import StopWatch from '@/components/Chrono/StopWatch/StopWatch'
 import { List } from '@/types'
-import { deepEqual, getFormattedTime } from '@/utils'
 import { Grid } from '@mui/material'
 import { Box } from '@mui/system'
 import Head from 'next/head'
@@ -10,6 +9,7 @@ import { GetServerSidePropsContext } from 'next/types'
 import { FC, useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
+import { getFormattedTime, deepEqual } from '@/utils/utils'
 
 type indexProps = {
   imageInfos: {
@@ -32,17 +32,11 @@ const style = {
 
 const Quizz: FC<indexProps> = ({ imageInfos }) => {
   const [isActive, setIsActive] = useState(false)
-  const [isPaused, setIsPaused] = useState(true)
   const [time, setTime] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleStart = () => {
     setIsActive(true)
-    setIsPaused(false)
-  }
-
-  const handlePauseResume = () => {
-    setIsPaused(!isPaused)
   }
 
   const handleReset = () => {
@@ -53,8 +47,6 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
   const handleSubmit = (values: any) => {
     console.log(values, imageInfos.response)
     if (deepEqual(values, imageInfos.response)) {
-      console.log('isoke')
-      handlePauseResume()
       setIsModalOpen(true)
     }
   }
@@ -66,7 +58,7 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
   useEffect(() => {
     let interval: NodeJS.Timer
 
-    if (isActive && isPaused === false) {
+    if (isActive) {
       interval = setInterval(() => {
         setTime((time) => time + 10)
       }, 10)
@@ -74,7 +66,7 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
     return () => {
       clearInterval(interval)
     }
-  }, [isActive, isPaused])
+  }, [isActive])
 
   useEffect(() => {
     handleStart()
@@ -85,8 +77,8 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
       <Head>
         <title>Dishonored 2 Door Training - Quizz</title>
       </Head>
-      <Grid container sx={{ display: 'flex', justifyContent: 'center', padding: 0 }}>
-        <Grid item xs={12} sm={4} md={7}>
+      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', padding: 0 }}>
+        <Grid item xs={12} md={7}>
           <Image
             src={imageInfos.url}
             alt=""
@@ -95,11 +87,9 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
             style={{ margin: '0 auto', width: 'auto', height: 'auto' }}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={12} md={5}>
           <StopWatch
             isActive={isActive}
-            isPaused={isPaused}
-            handlePauseResume={handlePauseResume}
             handleReset={handleReset}
             handleStart={handleStart}
             time={time}

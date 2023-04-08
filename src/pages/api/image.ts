@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { List } from '@/types'
-import { getRandomInt } from '@/utils'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { responseList } from './response'
+import { getRandomInt } from '@/utils/utils'
 
 type Data = {
   url: string

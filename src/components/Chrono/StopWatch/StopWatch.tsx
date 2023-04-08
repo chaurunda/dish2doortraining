@@ -4,31 +4,16 @@ import ControlButton from '../ControlButton/ControlButton'
 
 type StopWatchProps = {
   isActive: boolean
-  isPaused: boolean
   handleStart: () => void
-  handlePauseResume: () => void
   handleReset: () => void
   time: number
 }
 
-const StopWatch: FC<StopWatchProps> = ({
-  isActive,
-  isPaused,
-  handleStart,
-  handlePauseResume,
-  handleReset,
-  time,
-}) => {
+const StopWatch: FC<StopWatchProps> = ({ isActive, handleStart, handleReset, time }) => {
   return (
     <div>
       <Timer time={time} />
-      <ControlButton
-        isActive={isActive}
-        isPaused={isPaused}
-        handleStart={handleStart}
-        handlePauseResume={handlePauseResume}
-        handleReset={handleReset}
-      />
+      <ControlButton isActive={isActive} handleStart={handleStart} handleReset={handleReset} />
     </div>
   )
 }
