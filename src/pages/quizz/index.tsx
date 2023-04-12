@@ -10,6 +10,8 @@ import { FC, useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import { getFormattedTime, deepEqual } from '@/utils/utils'
+import { getLocalStorage, setLocalStorage } from '@/utils/handleLocalStorage'
+import { LOCALSTORAGENAME } from '@/constants'
 
 type indexProps = {
   imageInfos: {
@@ -34,9 +36,25 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
   const [isActive, setIsActive] = useState(false)
   const [time, setTime] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [localStorageValue, setLocalStorageValue] = useState<string | void | null>('')
+  const [isPaused, setIsPaused] = useState(true)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formattedLocalStorageValue, setFormattedLocalStorageValue] = useState<Array<number>>()
+
+  useEffect(() => {
+    if (localStorageValue) {
+      const localStorageSplitted = localStorageValue.split(',')
+      const sortedArray = localStorageSplitted
+        .map((value) => parseInt(value))
+        .sort((a, b) => a - b)
+        .slice(0, 4)
+      setFormattedLocalStorageValue(sortedArray)
+    }
+  }, [localStorageValue])
 
   const handleStart = () => {
     setIsActive(true)
+    setIsPaused(false)
   }
 
   const handleReset = () => {
@@ -45,9 +63,14 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
   }
 
   const handleSubmit = (values: any) => {
-    console.log(values, imageInfos.response)
     if (deepEqual(values, imageInfos.response)) {
+      setIsPaused(true)
       setIsModalOpen(true)
+      if (!isSubmitted) {
+        setLocalStorageValue(getLocalStorage(LOCALSTORAGENAME))
+        setLocalStorage(LOCALSTORAGENAME, time.toString())
+        setIsSubmitted(true)
+      }
     }
   }
 
@@ -58,7 +81,7 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
   useEffect(() => {
     let interval: NodeJS.Timer
 
-    if (isActive) {
+    if (isActive && !isPaused) {
       interval = setInterval(() => {
         setTime((time) => time + 10)
       }, 10)
@@ -66,7 +89,7 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
     return () => {
       clearInterval(interval)
     }
-  }, [isActive])
+  }, [isActive, isPaused])
 
   useEffect(() => {
     handleStart()
@@ -95,23 +118,32 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
             time={time}
           />
         </Grid>
-
-        <Modal
-          open={isModalOpen}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Congratulation you did it !
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              You made it in {getFormattedTime(time)}
-            </Typography>
-          </Box>
-        </Modal>
       </Grid>
+      <Modal
+        open={isModalOpen}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Congratulation you did it !
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            You made it in {getFormattedTime(time)}
+            {!!localStorageValue && (
+              <p>
+                Here are the 5 best timer :
+                <ol>
+                  {formattedLocalStorageValue?.map((value) => (
+                    <li key={value}>{getFormattedTime(value)}</li>
+                  ))}
+                </ol>
+              </p>
+            )}
+          </Typography>
+        </Box>
+      </Modal>
       <Box
         sx={{
           marginTop: 8,

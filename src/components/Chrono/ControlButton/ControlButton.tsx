@@ -1,4 +1,5 @@
 import { Button } from '@mui/material'
+import Link from 'next/link'
 import { FC } from 'react'
 
 type ControlButtonProps = {
@@ -14,7 +15,7 @@ const ControlButton: FC<ControlButtonProps> = ({ isActive, handleStart, handleRe
     </Button>
   )
   const ActiveButtons = (
-    <Button variant="contained" onClick={handleReset}>
+    <Button variant="contained" onClick={() => location.reload()}>
       Reset
     </Button>
   )

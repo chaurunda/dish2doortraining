@@ -43,7 +43,7 @@ const AnswerForm: FC<AnswerFormProps> = ({ handleSubmit }) => {
             )
           })}
         </div>
-        <Button color="primary" variant="contained" fullWidth type="submit">
+        <Button color="primary" variant="contained" fullWidth type="submit" sx={{ mt: 4 }}>
           Submit
         </Button>
       </form>
