@@ -1,17 +1,17 @@
+import { AppBar, Button, Grid, IconButton, Toolbar } from '@mui/material'
+import { FC, useEffect, useState } from 'react'
+import { deepEqual, getFormattedTime } from '@/utils/utils'
+import { getLocalStorage, setLocalStorage } from '@/utils/handleLocalStorage'
+
 import AnswerForm from '@/components/AnswerForm'
-import StopWatch from '@/components/Chrono/StopWatch/StopWatch'
-import { List } from '@/types'
-import { Grid } from '@mui/material'
 import { Box } from '@mui/system'
+import { GetServerSidePropsContext } from 'next/types'
 import Head from 'next/head'
 import Image from 'next/image'
-import { GetServerSidePropsContext } from 'next/types'
-import { FC, useEffect, useState } from 'react'
-import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
-import { getFormattedTime, deepEqual } from '@/utils/utils'
-import { getLocalStorage, setLocalStorage } from '@/utils/handleLocalStorage'
 import { LOCALSTORAGENAME } from '@/constants'
+import { List } from '@/types'
+import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
 
 type indexProps = {
   imageInfos: {
@@ -33,11 +33,8 @@ const style = {
 }
 
 const Quizz: FC<indexProps> = ({ imageInfos }) => {
-  const [isActive, setIsActive] = useState(false)
-  const [time, setTime] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [localStorageValue, setLocalStorageValue] = useState<string | void | null>('')
-  const [isPaused, setIsPaused] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formattedLocalStorageValue, setFormattedLocalStorageValue] = useState<Array<number>>()
 
@@ -52,23 +49,11 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
     }
   }, [localStorageValue])
 
-  const handleStart = () => {
-    setIsActive(true)
-    setIsPaused(false)
-  }
-
-  const handleReset = () => {
-    setIsActive(false)
-    setTime(0)
-  }
-
   const handleSubmit = (values: any) => {
-    if (deepEqual(values, imageInfos.response)) {
-      setIsPaused(true)
+    if (!deepEqual(values, imageInfos.response)) {
       setIsModalOpen(true)
       if (!isSubmitted) {
         setLocalStorageValue(getLocalStorage(LOCALSTORAGENAME))
-        setLocalStorage(LOCALSTORAGENAME, time.toString())
         setIsSubmitted(true)
       }
     }
@@ -78,45 +63,23 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
     setIsModalOpen(false)
   }
 
-  useEffect(() => {
-    let interval: NodeJS.Timer
-
-    if (isActive && !isPaused) {
-      interval = setInterval(() => {
-        setTime((time) => time + 10)
-      }, 10)
-    }
-    return () => {
-      clearInterval(interval)
-    }
-  }, [isActive, isPaused])
-
-  useEffect(() => {
-    handleStart()
-  }, [])
-
   return (
     <>
       <Head>
         <title>Dishonored 2 Door Training - Quizz</title>
       </Head>
-      <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center', padding: 0 }}>
-        <Grid item xs={12} md={7}>
-          <Image
-            src={imageInfos.url}
-            alt=""
-            width={800}
-            height={830}
-            style={{ margin: '0 auto', width: 'auto', height: 'auto' }}
-          />
+      <Grid container justifyContent="center" mt="1rem">
+        <Grid item xl={7} textAlign="center">
+          <Image src={imageInfos.url} alt="" width={400} height={415} />
         </Grid>
-        <Grid item xs={12} md={5}>
-          <StopWatch
-            isActive={isActive}
-            handleReset={handleReset}
-            handleStart={handleStart}
-            time={time}
-          />
+        <Grid item xl={7} xs={12}>
+          <Box
+            sx={{
+              marginTop: 2,
+            }}
+          >
+            <AnswerForm handleSubmit={handleSubmit} />
+          </Box>
         </Grid>
       </Grid>
       <Modal
@@ -130,27 +93,20 @@ const Quizz: FC<indexProps> = ({ imageInfos }) => {
             Congratulation you did it !
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            You made it in {getFormattedTime(time)}
+            You made it
             {!!localStorageValue && (
-              <p>
+              <>
                 Here are the 5 best timer :
                 <ol>
                   {formattedLocalStorageValue?.map((value) => (
                     <li key={value}>{getFormattedTime(value)}</li>
                   ))}
                 </ol>
-              </p>
+              </>
             )}
           </Typography>
         </Box>
       </Modal>
-      <Box
-        sx={{
-          marginTop: 8,
-        }}
-      >
-        <AnswerForm handleSubmit={handleSubmit} />
-      </Box>
     </>
   )
 }

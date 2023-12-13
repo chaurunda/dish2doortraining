@@ -26,7 +26,6 @@ function isObject(object: any) {
 }
 
 export function getTimeInMinutes(time: number) {
-  // For some reason, if I wish to use `` on the next string, it will slow the timer
   return ('0' + Math.floor((time / 60000) % 60)).slice(-2)
 }
 

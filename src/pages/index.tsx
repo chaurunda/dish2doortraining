@@ -2,15 +2,15 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Box,
   Button,
   Container,
   Typography,
 } from '@mui/material'
-import Image from 'next/image'
-import Head from 'next/head'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+
 import ExampleImage from '../../public/enigma/TseTCbC.png'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Head from 'next/head'
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -21,49 +21,36 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: 0,
-          }}
-        >
-          <Container>
-            <Typography variant="h1" sx={{ fontSize: '2rem', textAlign: 'center' }}>
-              Dishonored 2 Door Training
-            </Typography>
-            <Typography mt="1rem">
-              Welcome to the Dishonored 2 door Training. This aim to help you to open the gate as
-              fast as possible
-            </Typography>
-            <Typography variant="h2" sx={{ fontSize: '1.6rem', textAlign: 'center' }}>
-              Need some help ?
-            </Typography>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography>Example</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Image
-                    src={ExampleImage}
-                    alt="Example Image"
-                    style={{ width: '75%', height: 'auto' }}
-                  />
-                </div>
-              </AccordionDetails>
-            </Accordion>
-            <Button href="/quizz" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
-              Go
-            </Button>
-          </Container>
-        </Box>
+        <Container>
+          <Typography mt="1rem">
+            Welcome to the Dishonored 2 door Training. This aim to help you to open the gate as fast
+            as possible
+          </Typography>
+          <Typography variant="h2" sx={{ fontSize: '1.6rem', textAlign: 'center' }}>
+            Need some help ?
+          </Typography>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>Example</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Image
+                  src={ExampleImage}
+                  alt="Example Image"
+                  style={{ width: '75%', height: 'auto' }}
+                />
+              </div>
+            </AccordionDetails>
+          </Accordion>
+          <Button href="/quizz" variant="contained" fullWidth sx={{ mt: 3, mb: 2 }}>
+            Go
+          </Button>
+        </Container>
       </main>
     </>
   )

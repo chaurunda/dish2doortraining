@@ -1,7 +1,8 @@
 import { Button, Grid, TextField } from '@mui/material'
+
 import { FC } from 'react'
-import { useFormik } from 'formik'
 import SelectForm from './SelectForm'
+import { useFormik } from 'formik'
 
 type AnswerFormProps = {
   handleSubmit: (values: any) => void
@@ -24,7 +25,7 @@ const AnswerForm: FC<AnswerFormProps> = ({ handleSubmit }) => {
   return (
     <Grid justifyContent="center" width="100%">
       <form onSubmit={formik.handleSubmit}>
-        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
           {Object.keys(formik.values).map((value, index) => {
             return (
               <TextField
