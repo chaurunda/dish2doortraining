@@ -15,7 +15,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.8",
-    "@types/node": "18.19.21",
+    "@types/node": "18.19.22",
     "@types/react": "18.2.63",
     "@types/react-dom": "18.2.20",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
